@@ -1,0 +1,24 @@
+# Example setup file
+# .env-file contains some variables example: ${FOOBAR}
+version: "3.8"
+
+services:
+    web:
+        image: nginx:1.9.1 # Latest
+        #image: nginx:1.7 # oldest available
+        ports:
+            - "8080:80"
+        volumes:
+            - ./src/site:/site
+            - ./config/nginx.site.conf:/etc/nginx/conf.d/default.conf
+        depends_on: 
+            - php
+    php:
+        image: php:fpm-alpine3.11
+        volumes:
+            - ./src/site:/site
+            - ./config/php.log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+            #- ./config/php.ini:/usr/local/etc/php/php.ini
+## Place your own PHP.INI file in PHP directory and uncomment the line above
+
+
